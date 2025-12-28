@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/util_style.css">
+    <title>유틸리티</title>
+  </head>
+
+  <body>
+    <!-- 헤더 -->
+    <header class="site-header">
+      <div id="logo">
+        <h1>유틸리티</h1>
+        <nav>
+          <a href="./index.html">♤ 메인</a>
+          <a href="./cost_manage.html">♧ 비용</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- ===== 앱/웹 이동 ===== -->
+    <div class="page">
+      <h3>유용한 앱 / 웹</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>이름</th>
+            <th>이동</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>구글맵</td>
+            <td>
+              <button onclick="openGoogleMap()">이동</button>
+            </td>
+          </tr>
+          <tr>
+            <td>USJ</td>
+            <td>
+              <button onclick="openUSJ()">이동</button>
+            </td>
+          </tr>
+          <tr>
+            <td>파파고</td>
+            <td>
+              <button onclick="openPapago()">이동</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- ===== 환율 계산기 ===== -->
+      <fieldset>
+        <legend>환율 계산기</legend>
+
+        <p><b>£ 엔화</b></p>
+        <input type="number" id="yen" placeholder="엔화 입력">
+
+        <p><b>¢ 원화</b></p>
+        <input type="number" id="won" placeholder="원화 입력">
+      </fieldset>
+    </div>
+
+    <script src="./js/util.js"></script>
+  </body>
+</html>

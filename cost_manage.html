@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Firebase SDK -->
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+      import { getFirestore } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
+
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyDHjFoP_9S_xyA-jUGKC9uGUtEi1tjByGE",
+        authDomain: "jhmj-trip.firebaseapp.com",
+        projectId: "jhmj-trip",
+        storageBucket: "jhmj-trip.firebasestorage.app",
+        messagingSenderId: "702959344094",
+        appId: "1:702959344094:web:c8e0b4246e51f592e0a54f"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+      window.db = db;
+    </script>
+    <link rel="stylesheet" href="./css/cost_manage_style.css">
+    <title>여행 비용 관리</title>
+  </head>
+
+  <body>
+    <header class="site-header">
+      <div id="logo">
+        <h1>여행 비용 내역</h1>
+       <nav>
+        <a href="./cost_input.html">¢ 추가</a>
+        <a href="./index.html">♤ 메인</a>
+        <a href="./util.html"> † 유틸리티 </a>
+      </nav>
+      </div>
+    </header>
+
+    <div>
+      <h3>filtering</h3>
+      <label><input type="radio" name="filter" value="공동">공동</label>
+      <label><input type="radio" name="filter" value="지현">지현</label>
+      <label><input type="radio" name="filter" value="민지">민지</label>
+
+      <div id="pw-modal" class="modal hidden">
+      <div class="modal-box">
+        <h3 id="pw-title">비밀번호</h3>
+        <input
+          type="text"
+          id="pw-input"
+          placeholder="숫자 4자리"
+          maxlength="4"
+        />
+        <div class="modal-btns">
+          <button id="pw-confirm">확인</button>
+          <button id="pw-cancel">취소</button>
+        </div>
+      </div>
+    </div>
+
+      <h3>전체 내역</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>날짜</th>
+            <th>사용처</th>
+            <th>사용자</th>
+            <th>비용</th>
+          </tr>
+        </thead>
+        <tbody id="cost_table"></tbody>
+      </table>
+
+      <h3>합계</h3>
+      <p><b>공동: <span id="cav_total">0</span>엔</b></p>
+      <p>지현: <span id="jh_total">0</span>엔</p>
+      <p>민지: <span id="mj_total">0</span>엔</p>
+    </div>
+
+    <div id="confirmModal" class="modal hidden">
+      <div class="modal-box">
+        <p id="confirmText">삭제할까!</p>
+        <div class="modal-btns">
+          <button id="confirmCancel">취소</button>
+          <button id="confirmOk">삭제</button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="./js/cost_manage.js"></script>
+  </body>
+</html>

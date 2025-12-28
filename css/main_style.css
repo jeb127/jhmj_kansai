@@ -1,0 +1,136 @@
+/* 폰트 등록 */
+@font-face {
+  font-family: "온글잎 박다현체";             /* css 내에서 부를 별칭 */
+  src: url("../fonts/온글잎 박다현체.ttf");   /* 폰트 위치 */
+}
+
+/* -----------기본 세팅----------- */
+:root{
+  --bg: #edf4ff;
+  --main_blue: #cae4fe;
+  --sub_blue: #499bff;
+  --card: #ffffff;
+  --text: #3b2a35;
+}
+
+/* 박스 크기 계산 방식 통일
+*는 모든 요소에 적용한다는 뜻
+border-box: width 안에 padding + border 포함 */
+* {box-sizing: border-box;}
+
+body {
+  font-family: "온글잎 박다현체", sans-serif;
+  margin: 0;
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.5;       /* 줄 간격 */
+}
+
+/* -----------공통 레이아웃: 페이지 가운데 정렬----------- */
+body > *{
+  width: min(920px, 96vw);  /* 최대 920픽셀, 모바일에서는 화면의 92%로 */
+  margin-left: auto;        /* 가운데 정렬 */
+  margin-right: auto;
+  padding-bottom: 80px;
+}
+
+/* -----------헤더----------- */
+.site-header{
+  width: 100vw;                       /* 화면 전체 폭 */
+  margin-top: 0px;
+  margin-left: calc(50% - 50vw);      /* 양쪽 끝까지 당김 */
+  margin-right: calc(50% - 50vw);
+  background: var(--main_blue);
+  padding: 18px 18px;
+}
+
+/* 제목은 왼쪽, 메뉴는 오른쪽 */
+#logo{
+  display: flex;                    /* 가로 배치 */
+  align-items: center;              /* 세로 중앙 */
+  justify-content: space-between;   /* 좌우 끝으로 벌림 */
+  gap: 12px;                        /* 요소 사이 간격 */
+}
+
+#logo h1{
+  margin: 0;                /* 기본 여백 제거 */
+  font-size: 50px;
+}
+
+#logo nav{
+  display: flex;      /* 메뉴를 가로로 */
+  gap: 10px;          /* 버튼 사이 간격 */
+}
+
+/* 네비 버튼 */
+#logo nav a{
+  display: inline-block;
+  text-decoration: none;            /* 밑줄 제거 */
+  font-size: 20px;
+  color: var(--text);
+  background: var(--main_blue);
+  padding: 10px 20px;
+  font-weight: 700;
+}
+
+/* -----------제목/섹션----------- */
+h3{
+  margin-top: 30px;
+  margin-bottom: 10px;
+  font-size: 25px;
+  color: var(--text);
+}
+
+/* h3 앞 장식 */
+h3::before{
+  content: " ¢ ";
+  color: var(--sub_blue);
+}
+
+/* -----------표를 카드처럼----------- */
+table{
+  font-size: 20px;
+  width: 80%;
+  background: var(--card);
+  border: 2px solid var(--sub_blue);
+  border-radius: 16px;
+  overflow: hidden;                     /* 둥근 모서리 안 넘치게 */
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+thead th{
+  background: var(--main_blue);
+  color: var(--text);
+  font-weight: 800;
+  text-align: left; 
+}
+
+th, td{
+  padding: 12px 16px;                           /* 셀 안쪽 여백 */
+  border-bottom: 1px solid var(--sub_blue);     /* 행 구분선 */
+}
+
+/* 마지막 줄 밑줄 제거 */
+tbody tr:last-child td{
+  border-bottom: none;
+}
+
+/* -----------반응형 (폰에서 헤더 줄바꿈)----------- */
+/* 화면이 520 픽셀 이하면 로고/메뉴 새로 배치
+모바일에서도 안 깨짐! */
+@media (max-width: 520px){
+  #logo{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  #logo h1 {
+    font-size: 36px;
+  }
+}
+

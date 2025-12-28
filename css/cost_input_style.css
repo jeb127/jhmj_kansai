@@ -1,0 +1,157 @@
+/* 폰트 등록 */
+@font-face {
+  font-family: "온글잎 박다현체";             
+  src: url("../fonts/온글잎 박다현체.ttf");  
+}
+
+/* -----------기본 세팅----------- */
+:root{
+  --bg: #edf4ff;
+  --main_blue: #cae4fe;
+  --sub_blue: #499bff;
+  --card: #ffffff;
+  --text: #3b2a35;
+}
+
+/* 박스 크기 계산 방식 통일 */
+* {box-sizing: border-box;}
+
+body {
+  font-family: "온글잎 박다현체", sans-serif;
+  margin: 0;
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.5;       
+}
+
+/* -----------공통 레이아웃: 페이지 가운데 정렬----------- */
+body > *{
+  width: min(100%, 920px);  
+  margin-left: auto;        
+  margin-right: auto;
+}
+
+/* -----------헤더----------- */
+.site-header{
+  width: 100vw;                       
+  margin-top: 0px;
+  margin-left: calc(50% - 50vw);    
+  margin-right: calc(50% - 50vw);
+  background: var(--main_blue);
+  padding: 18px 18px;
+}
+
+/* 제목은 왼쪽, 메뉴는 오른쪽 */
+#logo{
+  display: flex;                   
+  align-items: center;             
+  justify-content: space-between;   
+  gap: 12px;                        
+}
+
+#logo h1{
+  margin: 0;              
+  font-size: 50px;
+}
+
+/* -----------폼 양식(카드느낌으로)----------- */
+#cost_form {
+  margin-top: 30px;
+}
+
+legend {
+  font-size: 30px;
+  color: var(--text);
+  margin-bottom: 5px;
+}
+
+/* ------------fieldset 카드화------------ */
+fieldset {
+  border: 2px solid var(--sub_blue);
+  border-radius: 16px;
+  background: var(--card);
+  padding: 25px 30px;
+}
+
+/* 항목 */
+fieldset p {
+  margin-top: 30px;
+  margin-bottom: 10px;
+  font-size: 25px;
+}
+
+fieldset p:first-of-type {
+  margin-top: 0px;
+}
+
+/* ul 기본 스타일 제거 */
+fieldset ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+/* radio 그룹 */
+fieldset li {
+  display: flex;
+  gap: 20px;
+}
+
+/* label 클릭 영역 넓히기 */
+fieldset label {
+  cursor: pointer;
+  font-size: 20px;
+}
+
+/* input */
+input[type="text"], input[type="number"] {
+  width: 45%;
+  padding: 10px 15px;
+  font-size: 20px;
+  border-radius: 16px;
+  border: 1px solid var(--text);
+}
+
+/* -----------버튼 영역----------- */
+input[type="submit"], input[type="button"] {
+  font-family: inherit;
+  font-size: 20px;
+  padding: 0 25px;
+  height: 52px;
+  line-height: 52px;
+  border-radius: 16px;
+  border: none;
+  margin-right: 10px;
+  background: var(--main_blue);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* -----------반응형 (폰에서 헤더 줄바꿈)----------- */
+@media (max-width: 600px) {
+  body {
+    font-size: 18px;
+  }
+
+  h1 {
+    font-size: 32px;
+  }
+
+  h3 {
+    font-size: 22px;
+  }
+
+  fieldset li {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  input[type="text"], input[type="number"] {
+    width: 100%;
+  }
+
+  input[type="submit"], input[type="reset"] {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}

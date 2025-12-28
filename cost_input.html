@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Firebase SDK (Firestore까지 포함해서 import 해야 함) -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+      import { getFirestore } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyDHjFoP_9S_xyA-jUGKC9uGUtEi1tjByGE",
+        authDomain: "jhmj-trip.firebaseapp.com",
+        projectId: "jhmj-trip",
+        storageBucket: "jhmj-trip.firebasestorage.app",
+        messagingSenderId: "702959344094",
+        appId: "1:702959344094:web:c8e0b4246e51f592e0a54f"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+
+      // 다른 JS 파일에서 쓰게 전역으로 걸어두기
+      window.db = db;
+    </script>
+
+    <link rel="stylesheet" href="./css/cost_input_style.css">
+    <title>여행 비용 입력</title>
+  </head>
+
+  <body>
+    <header class="site-header">
+      <div id="logo">
+        <h1>여행 비용 입력</h1>
+      </div>
+    </header>
+
+    <form id="cost_form">
+      <fieldset>
+        <legend>입력</legend>
+
+        <p><b>♤ 날짜</b></p>
+        <ul>
+          <li>
+            <label><input type="radio" name="date" value="2.09">2.09</label>
+            <label><input type="radio" name="date" value="2.10">2.10</label>
+            <label><input type="radio" name="date" value="2.11">2.11</label>
+            <label><input type="radio" name="date" value="2.12">2.12</label>
+          </li>
+        </ul>
+
+        <p><b>♧ 사용자</b></p>
+        <ul>
+          <li>
+            <label><input type="radio" name="who" value="공동">공동</label>
+            <label><input type="radio" name="who" value="지현">지현</label>
+            <label><input type="radio" name="who" value="민지">민지</label>
+          </li>
+        </ul>
+
+        <p><b>† 사용처</b></p>
+        <input type="text" id="spendby">
+
+        <p><b>£ 비용</b></p>
+        <input type="number" id="cost">
+      </fieldset>
+
+      <br>
+      <input type="submit" value="등록">
+      <input type="button" id="cancel" value="취소">
+    </form>
+
+    <script type="module" src="./js/cost_input.js"></script>
+  </body>
+</html>
