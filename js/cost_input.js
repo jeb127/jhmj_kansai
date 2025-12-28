@@ -45,9 +45,10 @@ form.addEventListener("submit", async function (e) {
     await addDoc(colRef, costData);
 
     // 관리 페이지로 이동
-    window.location.href = "./cost_manage.html";
+    window.location.href = "/jhmj_kansai/cost_manage.html";
   } catch (err) {
     console.error(err);
     alert("저장 실패! 콘솔(F12)에서 에러 확인해줘.");
   }
 });
+
