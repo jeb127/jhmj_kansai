@@ -16,7 +16,7 @@ function openAppOrWeb(appUrl, webUrl) {
 ================================ */
 function openGoogleMap() {
   const app = "comgooglemaps://";
-  const web = "https://www.google.com/maps";
+  const web = "https://maps.app.goo.gl/wRLJJQifdFnjYCdA6";
   openAppOrWeb(app, web);
 }
 
@@ -64,3 +64,4 @@ wonInput.addEventListener("input", () => {
   if (isNaN(won)) return;
   yenInput.value = Math.round(won / RATE);
 });
+
