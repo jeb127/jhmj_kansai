@@ -116,6 +116,12 @@ tbody tr:last-child td{
   border-bottom: none;
 }
 
+td a{
+  color: var(--sub_blue);
+  text-decoration: none;
+  font-weight: 600;
+}
+
 /* -----------반응형 (폰에서 헤더 줄바꿈)----------- */
 /* 화면이 520 픽셀 이하면 로고/메뉴 새로 배치
 모바일에서도 안 깨짐! */
@@ -133,4 +139,5 @@ tbody tr:last-child td{
     font-size: 36px;
   }
 }
+
 
