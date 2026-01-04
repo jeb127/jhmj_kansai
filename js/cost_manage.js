@@ -1,14 +1,16 @@
 // ===== Firebase (module) =====
 import {
   collection,
-  getDocs,
   deleteDoc,
   doc,
-  onSnapshot
+  onSnapshot,
+  getDoc,
+  setDoc
 } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
 
-// window.db 는 HTML에서 이미 설정됨
-const colRef = collection(window.db, "trip", "jhmj-trip", "expenses");
+// ===== Firestore 경로 =====
+const expenseColRef = collection(window.db, "trip", "jhmj-trip", "expenses");
+const pwColRef = collection(window.db, "passwords");
 
 // ===== DOM =====
 const tBody = document.getElementById("cost_table");
@@ -25,18 +27,18 @@ let deleteId = null;
 // ===== 초기 =====
 document.querySelector('input[value="공동"]').checked = true;
 
-// Firestore 실시간 반영
-onSnapshot(colRef, (snapshot) => {
-  costlist = snapshot.docs.map(doc => ({
-    id: doc.id,
-    ...doc.data()
+// ===== Firestore 실시간 반영 =====
+onSnapshot(expenseColRef, (snapshot) => {
+  costlist = snapshot.docs.map(d => ({
+    id: d.id,
+    ...d.data()
   }));
   render(getCurrentFilter());
 });
 
 // ===== 필터 이벤트 =====
 radios.forEach(radio => {
-  radio.addEventListener("change", () => {
+  radio.addEventListener("change", async () => {
     const user = radio.value;
 
     if (user === "공동") {
@@ -46,7 +48,7 @@ radios.forEach(radio => {
 
     currentUser = user;
 
-    if (!hasPassword(user)) openModal("set");
+    if (!(await hasPassword(user))) openModal("set");
     else openModal("check");
   });
 });
@@ -98,7 +100,7 @@ function renderTable(list) {
     });
     tr.addEventListener("touchend", () => clearTimeout(timer));
 
-    // 🖥 PC 우클릭
+    // PC 우클릭
     tr.addEventListener("contextmenu", (e) => {
       e.preventDefault();
       openConfirm(item.id);
@@ -115,6 +117,7 @@ function renderTotals(filter, list) {
 
   list.forEach(item => {
     const cost = Number(item.cost) || 0;
+
     if (item.who === "공동") {
       total += cost;
       if (filter !== "공동") personal += cost / 2;
@@ -137,10 +140,11 @@ function renderTotals(filter, list) {
   if (filter === "민지") mjTotalEl.parentElement.style.display = "";
 }
 
-// ===== 비밀번호 =====
-function hasPassword(user) {
-  const pw = JSON.parse(localStorage.getItem("cost_passwords")) || {};
-  return !!pw[user];
+// ===== 비밀번호 존재 여부 =====
+async function hasPassword(user) {
+  const ref = doc(window.db, "passwords", user);
+  const snap = await getDoc(ref);
+  return snap.exists();
 }
 
 // ===== 비밀번호 모달 =====
@@ -160,25 +164,29 @@ function openModal(mode) {
   input.focus();
 }
 
-document.getElementById("pw-confirm").onclick = () => {
+// ===== 비밀번호 확인 / 저장 =====
+document.getElementById("pw-confirm").onclick = async () => {
   const input = document.getElementById("pw-input").value;
   const modal = document.getElementById("pw-modal");
-  const pw = JSON.parse(localStorage.getItem("cost_passwords")) || {};
 
   if (!/^\d{4}$/.test(input)) {
     alert("숫자 4자리만 가능");
     return;
   }
 
+  const ref = doc(window.db, "passwords", currentUser);
+  const snap = await getDoc(ref);
+
+  // 최초 설정
   if (modal.dataset.mode === "set") {
-    pw[currentUser] = input;
-    localStorage.setItem("cost_passwords", JSON.stringify(pw));
+    await setDoc(ref, { pw: input });
     modal.classList.add("hidden");
     render(currentUser);
     return;
   }
 
-  if (pw[currentUser] === input) {
+  // 비밀번호 확인
+  if (snap.exists() && snap.data().pw === input) {
     modal.classList.add("hidden");
     render(currentUser);
   } else {
