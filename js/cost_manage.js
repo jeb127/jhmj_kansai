@@ -90,7 +90,7 @@ function renderTable(list) {
       <td>${item.date}</td>
       <td>${item.spendby}</td>
       <td>${item.who}</td>
-      <td>${Number(item.cost).toLocaleString()}원</td>
+      <td>${Number(item.cost).toLocaleString()}엔</td>
     `;
 
     // 모바일 길게 눌러 삭제
@@ -223,3 +223,4 @@ document.getElementById("confirmOk").onclick = async () => {
   document.getElementById("confirmModal").classList.add("hidden");
   deleteId = null;
 };
+
