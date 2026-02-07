@@ -58,19 +58,47 @@ function getCurrentFilter() {
   return document.querySelector('input[name="filter"]:checked')?.value || "공동";
 }
 
+// ===== 정렬 기준 =====
+function dateKey(dateStr) {
+  const s = String(dateStr ?? "").trim();
+
+  // '이전'은 무조건 가장 먼저
+  if (s === "이전") return -1;
+
+  // "2.03" 같은 형식만 날짜로 인정
+  const m = s.match(/^(\d{1,2})\.(\d{1,2})$/);
+  if (!m) return 999999; // 이상한 값은 맨 뒤로
+
+  const month = Number(m[1]);
+  const day = Number(m[2]);
+  return month * 100 + day; // 2월3일 -> 203
+}
+
+
 // ===== 렌더 =====
 function render(filter) {
   const visibleList = getVisibleList(filter);
-  renderTable(visibleList);
-  renderTotals(filter, visibleList);
+
+  const sorted = [...visibleList].sort((a, b) => {
+    const diff = dateKey(a.date) - dateKey(b.date);
+    if (diff !== 0) return diff;
+
+    // 같은 날짜면 createdAt 오름차순
+    const ta = a.createdAt?.toMillis ? a.createdAt.toMillis() : 0;
+    const tb = b.createdAt?.toMillis ? b.createdAt.toMillis() : 0;
+    return ta - tb;
+  });
+
+  renderTable(sorted);
+  renderTotals(filter, sorted);
 }
 
 // ===== 필터링 =====
 function getVisibleList(filter) {
   if (filter === "공동") {
-    return costlist.filter(item => item.who === "공동");
+    return costlist.filter(item => item.who === "공동" || item.date === "이전");
   }
-  return costlist.filter(item => item.who === "공동" || item.who === filter);
+  return costlist.filter(item => item.date === "이전" || item.who === "공동" || item.who === filter);
 }
 
 // ===== 테이블 =====
@@ -223,4 +251,3 @@ document.getElementById("confirmOk").onclick = async () => {
   document.getElementById("confirmModal").classList.add("hidden");
   deleteId = null;
 };
-
